@@ -14,6 +14,7 @@ function App() {
     const [city, setCity] = useState("Current Location");
     const cities = ["paris", "new york", "hanoi", "Queenstown"];
     const [loading, setLoading] = useState(false);
+    const [bg, setBg] = useState("default.jpg");
 
     // 내위치의 위도,경도 받아오기기
     const getLocation = () => {
@@ -28,22 +29,32 @@ function App() {
     // 내위치 정보를 받아 날씨 정보 호출
     const getWeatherByLocation = async (lat, lon) => {
         setLoading(true);
-        let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-        let response = await fetch(url);
-        let data = await response.json();
-        console.log(data);
-        setWeather(data);
-        setLoading(false);
+        try {
+            let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+            let response = await fetch(url);
+            let data = await response.json();
+            // console.log(data);
+            setWeather(data);
+        } catch (error) {
+            console.error("Error fetching weather:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const getWeatherByCity = async () => {
         setLoading(true);
-        let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
-        let response = await fetch(url);
-        let data = await response.json();
-        console.log(data);
-        setWeather(data);
-        setLoading(false);
+        try {
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
+            let response = await fetch(url);
+            let data = await response.json();
+            // console.log(data);
+            setWeather(data);
+        } catch (error) {
+            console.error("Error fetching weather:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleCurrentLocation = () => {
@@ -62,12 +73,17 @@ function App() {
     }, [city]);
 
     return (
-        <div className="wrap">
+        <div
+            className="wrap"
+            style={{
+                backgroundImage: `url(${bg})`,
+            }}
+        >
             <div className="weather-box">
                 {loading ? (
                     <CircularProgress />
                 ) : (
-                    <WeatherBox weather={weather} />
+                    <WeatherBox weather={weather} setBg={setBg} />
                 )}
             </div>
             <div className="button-wrap">
