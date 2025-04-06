@@ -9,7 +9,7 @@ import { Button, CircularProgress } from "@mui/material";
 // 다섯개의 도시 버튼을 누르면(현재위치버튼 포함) 각 도시의 날씨정보를 보여준다.
 // 로딩스피너 추가하기 : 로딩중에는 박스가 안보임.
 function App() {
-    const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
+    const VITE_OPENWEATHER_API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
     // const API_KEY = process.env.REACT_APP_OPENWEATHER_API_KEY
     const [weather, setWeather] = useState(null);
     const [city, setCity] = useState("Current Location");
@@ -31,7 +31,7 @@ function App() {
     const getWeatherByLocation = async (lat, lon) => {
         setLoading(true);
         try {
-            let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+            let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${VITE_OPENWEATHER_API_KEY}&units=metric`;
             let response = await fetch(url);
             let data = await response.json();
             // console.log(data);
@@ -46,7 +46,7 @@ function App() {
     const getWeatherByCity = async () => {
         setLoading(true);
         try {
-            let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${VITE_OPENWEATHER_API_KEY}&units=metric`;
             let response = await fetch(url);
             let data = await response.json();
             // console.log(data);
