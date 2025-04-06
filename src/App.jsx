@@ -9,7 +9,8 @@ import { Button, CircularProgress } from "@mui/material";
 // 다섯개의 도시 버튼을 누르면(현재위치버튼 포함) 각 도시의 날씨정보를 보여준다.
 // 로딩스피너 추가하기 : 로딩중에는 박스가 안보임.
 function App() {
-    const API_KEY = "29aedfad12ddd4b3918bd7493a44da91";
+    const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
+    // const API_KEY = process.env.REACT_APP_OPENWEATHER_API_KEY
     const [weather, setWeather] = useState(null);
     const [city, setCity] = useState("Current Location");
     const cities = ["paris", "new york", "hanoi", "Queenstown"];
